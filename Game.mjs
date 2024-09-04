@@ -50,6 +50,7 @@ function drawList(list, color) {
     }
 
     return output + ANSI.RESET;
+    
 }
  
 while (isGameOver == false) {
@@ -109,12 +110,12 @@ if (wasGuessCorrect) {
 }
 
 
-const answer = (await askQuestion("Do you wish to play again? :")).toLowerCase();
+const answer = (await askQuestion(ANSI.COLOR.BLUE + "Do you wish to play again? (Yes/No) :")).toLowerCase();
 if (answer == 'yes') {
     isGameOver = false;
 } else {
     answer == 'no';
-    console.log("Thanks for Playing");
+    console.log(ANSI.COLOR.BLUE + "Thanks for Playing!");
     isGameOver = true;
     process.exit();
 }
