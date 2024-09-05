@@ -14,19 +14,21 @@ import { HANGMAN_UI } from './graphics.mjs';
 import { WORD_LIST } from './words.mjs';
 
 let isGameOver = false;
-while (isGameOver == false){ //Game Loop
-//#region Random Word Function
+while (isGameOver == false){ 
+
 function getRandomWord() {
     const randomIndex = Math.floor(Math.random() * WORD_LIST.length);
     return WORD_LIST[randomIndex];
 }
-//#endregion
+
 const correctWord = getRandomWord().toLowerCase();
 const numberOfCharInWord = correctWord.length;
+
 let guessedWord = "".padStart(correctWord.length, "_");
 let wordDisplay = "";
 let wasGuessCorrect = false;
 let wrongGuesses = [];
+let totalGuesses = 0;
 
 function drawWordDisplay() {
 
@@ -61,7 +63,6 @@ while (isGameOver == false) {
     console.log(HANGMAN_UI[wrongGuesses.length]);
 
     const answer = (await askQuestion("Guess a char or the word : ")).toLowerCase();
-
     if (answer == correctWord) {
         isGameOver = true;
         wasGuessCorrect = true;
@@ -69,6 +70,7 @@ while (isGameOver == false) {
 
         let org = guessedWord;
         guessedWord = "";
+        totalGuesses++;
 
         let isCorrect = false;
         for (let i = 0; i < correctWord.length; i++) {
@@ -80,7 +82,7 @@ while (isGameOver == false) {
             }
         }
 
-        if (isCorrect == false) {
+        if (!isCorrect) {
             wrongGuesses.push(answer);
         } else if (guessedWord == correctWord) {
             isGameOver = true;
@@ -92,7 +94,7 @@ while (isGameOver == false) {
         isGameOver = true;
     }
 
-}
+
 
 
 
@@ -103,12 +105,14 @@ console.log(HANGMAN_UI[wrongGuesses.length]);
 
 if (wasGuessCorrect) {
     console.log(ANSI.COLOR.YELLOW + "Congratulations! You did it!");
+    console.log("Your Total Guesses: " + totalGuesses);
     } else {
         wasGuessCorrect = false;
-        console.log(ANSI.COLOR.RED + "Game Over.");
-        console.log("You've Lost, Better luck next time.")
+        console.log(ANSI.COLOR.RED + "Game Over. The Correct Word Was: " + ANSI.COLOR.GREEN + correctWord);
+        console.log(ANSI.RESET, "You've Lost, Better luck next time.");
+        console.log("Your Total Guesses: " + totalGuesses);
+    }
 }
-
 
 const answer = (await askQuestion(ANSI.COLOR.BLUE + "Do you wish to play again? (Yes/No) :")).toLowerCase();
 if (answer == 'yes') {
@@ -120,8 +124,7 @@ if (answer == 'yes') {
     process.exit();
 }
 
+function ifPlayerGuessedLetter(answer){
+    return answer.length == 1;
 }
-function ifPlayerGuessedLetter(answer) {
-    return answer.length == 1
 }
-
