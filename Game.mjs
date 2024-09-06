@@ -109,7 +109,7 @@ if (wasGuessCorrect) {
     } else {
         wasGuessCorrect = false;
         console.log(ANSI.COLOR.RED + "Game Over. The Correct Word Was: " + ANSI.COLOR.GREEN + correctWord);
-        console.log(ANSI.RESET, "You've Lost, Better luck next time.");
+        console.log(ANSI.RESET + "You've Lost, Better luck next time.");
         console.log("Your Total Guesses: " + totalGuesses);
     }
 }
@@ -119,7 +119,7 @@ if (answer == 'yes') {
     isGameOver = false;
 } else {
     answer == 'no';
-    console.log(ANSI.COLOR + "Thanks for Playing!");
+    console.log("Thanks for Playing!");
     console.log(ANSI.RESET);
     isGameOver = true;
     process.exit();
