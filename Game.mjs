@@ -44,6 +44,7 @@ let wordDisplay = "";
 let wasGuessCorrect = false;
 let uniqueErrors = new Set();
 let totalGuesses = 0;
+let repeatedLetter = [];
 uniqueErrors = Array.from(uniqueErrors);
 
 function drawWordDisplay() {
@@ -72,7 +73,7 @@ while (isGameOver == false) {
     console.log(ANSI.CLEAR_SCREEN);
     console.log(drawWordDisplay());
     console.log(drawList(uniqueErrors, ANSI.COLOR.RED));
-    console.log(HANGMAN_UI[uniqueErrors.length]);
+    console.log(HANGMAN_UI[uniqueErrors.length + repeatedLetter.length]);
 
     const answer = (await askQuestion(guessAWord)).toLowerCase();
 
@@ -101,6 +102,8 @@ while (isGameOver == false) {
 
         if (!isCorrect && !uniqueErrors.includes(answer)) {
             uniqueErrors.push(answer);
+        } else {
+            repeatedLetter.push(answer);
         }
         
         if (guessedWord == correctWord) {
@@ -109,14 +112,14 @@ while (isGameOver == false) {
         }
     }
 
-    if (uniqueErrors.length == HANGMAN_UI.length - 1) {
+    if (uniqueErrors.length + repeatedLetter.length == HANGMAN_UI.length - 1) {
         isGameOver = true;
     }
 
     console.log(ANSI.CLEAR_SCREEN);
     console.log(drawWordDisplay());
     console.log(drawList(uniqueErrors, ANSI.COLOR.RED));
-    console.log(HANGMAN_UI[uniqueErrors.length]);
+    console.log(HANGMAN_UI[repeatedLetter.length + uniqueErrors.length]);
 
     if (wasGuessCorrect) {
         console.log(ANSI.COLOR.YELLOW + winText);
