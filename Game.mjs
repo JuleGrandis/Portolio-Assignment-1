@@ -14,6 +14,8 @@ import { HANGMAN_UI } from './graphics.mjs';
 import { WORD_LIST } from './words.mjs';
 
 let isGameOver = false;
+let totalWins = 0;
+let totalLosses = 0;
 while (isGameOver == false){ 
 
 function getRandomWord() {
@@ -105,7 +107,7 @@ console.log(HANGMAN_UI[wrongGuesses.length]);
 
 if (wasGuessCorrect) {
     console.log(ANSI.COLOR.YELLOW + "Congratulations! You did it!");
-    console.log("Your Total Guesses: " + totalGuesses);
+    console.log(ANSI.RESET + "Your Total Guesses: " + totalGuesses);
     } else {
         wasGuessCorrect = false;
         console.log(ANSI.COLOR.RED + "Game Over. The Correct Word Was: " + ANSI.COLOR.GREEN + correctWord);
@@ -113,8 +115,16 @@ if (wasGuessCorrect) {
         console.log("Your Total Guesses: " + totalGuesses);
     }
 }
+if (!wasGuessCorrect) {
+    totalLosses++;
+} else { 
+    wasGuessCorrect == true;
+    totalWins++;
+}
 
+console.log("Total Wins: " + totalWins, "Total Losses: " + totalLosses);
 const answer = (await askQuestion(ANSI.COLOR.BLUE + "Do you wish to play again? (Yes/No) :")).toLowerCase();
+
 if (answer == 'yes') {
     isGameOver = false;
 } else {
