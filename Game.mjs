@@ -119,7 +119,8 @@ if (answer == 'yes') {
     isGameOver = false;
 } else {
     answer == 'no';
-    console.log(ANSI.COLOR.BLUE + "Thanks for Playing!");
+    console.log(ANSI.COLOR + "Thanks for Playing!");
+    console.log(ANSI.RESET);
     isGameOver = true;
     process.exit();
 }
