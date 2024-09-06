@@ -13,6 +13,15 @@ import { ANSI } from './ansi.mjs';
 import { HANGMAN_UI } from './graphics.mjs';
 import { WORD_LIST } from './words.mjs';
 
+const guessAWord = "Guess a char or the word : ";
+const winText = "Congratulations! You did it!";
+const totalGuessesText = "Your Total Guesses: ";
+const loseText = "Game Over. The Correct Word Was: ";
+const totalWinsText = "Total Wins: ";
+const totalLossText = "Total Losses: ";
+const replayText = "Do you wish to play again? (Yes/No) :";
+const exitText = "Thanks for Playing!";
+
 let isGameOver = false;
 let totalWins = 0;
 let totalLosses = 0;
@@ -64,7 +73,7 @@ while (isGameOver == false) {
     console.log(drawList(wrongGuesses, ANSI.COLOR.RED));
     console.log(HANGMAN_UI[wrongGuesses.length]);
 
-    const answer = (await askQuestion("Guess a char or the word : ")).toLowerCase();
+    const answer = (await askQuestion(guessAWord)).toLowerCase();
     if (answer == correctWord) {
         isGameOver = true;
         wasGuessCorrect = true;
@@ -112,13 +121,13 @@ console.log(drawList(wrongGuesses, ANSI.COLOR.RED));
 console.log(HANGMAN_UI[wrongGuesses.length]);
 
 if (wasGuessCorrect) {
-    console.log(ANSI.COLOR.YELLOW + "Congratulations! You did it!");
-    console.log(ANSI.RESET + "Your Total Guesses: " + totalGuesses);
+    console.log(ANSI.COLOR.YELLOW + winText);
+    console.log(ANSI.RESET + totalGuessesText + totalGuesses);
     } else {
         wasGuessCorrect = false;
-        console.log(ANSI.COLOR.RED + "Game Over. The Correct Word Was: " + ANSI.COLOR.GREEN + correctWord);
-        console.log(ANSI.RESET + "You've Lost, Better luck next time.");
-        console.log("Your Total Guesses: " + totalGuesses);
+        console.log(ANSI.COLOR.RED + loseText + ANSI.COLOR.GREEN + correctWord);
+        console.log(totalGuessesText + totalGuesses);
+        console.log(ANSI.RESET);
     }
 }
 if (!wasGuessCorrect) {
@@ -128,14 +137,14 @@ if (!wasGuessCorrect) {
     totalWins++;
 }
 
-console.log("Total Wins: " + totalWins, "Total Losses: " + totalLosses);
-const answer = (await askQuestion(ANSI.COLOR.BLUE + "Do you wish to play again? (Yes/No) :")).toLowerCase();
+console.log(totalWinsText + totalWins, totalLossText + totalLosses);
+const answer = (await askQuestion(ANSI.COLOR.BLUE + replayText)).toLowerCase();
 
 if (answer == 'yes') {
     isGameOver = false;
 } else {
     answer == 'no';
-    console.log("Thanks for Playing!");
+    console.log(exitText);
     console.log(ANSI.RESET);
     isGameOver = true;
     process.exit();
