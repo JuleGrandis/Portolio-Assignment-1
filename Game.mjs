@@ -77,8 +77,14 @@ while (isGameOver == false) {
         let isCorrect = false;
         for (let i = 0; i < correctWord.length; i++) {
             if (correctWord[i] == answer) {
-                guessedWord += answer;
-                isCorrect = true;
+                if (org[i] == answer) {
+                    isCorrect = false;
+                    wrongGuesses.push(answer);
+                    guessedWord += org[i];
+                } else {
+                    guessedWord += answer;
+                    isCorrect = true;
+                }
             } else { 
                 guessedWord += org[i];
             }
