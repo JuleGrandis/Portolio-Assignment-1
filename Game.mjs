@@ -13,6 +13,7 @@ import { ANSI } from './ansi.mjs';
 import { HANGMAN_UI } from './graphics.mjs';
 import { WORD_LIST } from './words.mjs';
 
+const answerYes = "y"
 const guessAWord = "Guess a char or the word : ";
 const winText = "Congratulations! You did it!";
 const totalGuessesText = "Your Total Guesses: ";
@@ -88,7 +89,7 @@ while (isGameOver == false) {
             if (correctWord[i] == answer) {
                 if (org[i] == answer) {
                     isCorrect = false;
-                    wrongGuesses.push(answer);
+                    //wrongGuesses.push(answer);
                     guessedWord += org[i];
                 } else {
                     guessedWord += answer;
@@ -99,7 +100,7 @@ while (isGameOver == false) {
             }
         }
 
-        if (!isCorrect) {
+        if (!isCorrect && !wrongGuesses.includes(answer)) {
             wrongGuesses.push(answer);
         } else if (guessedWord == correctWord) {
             isGameOver = true;
@@ -110,10 +111,6 @@ while (isGameOver == false) {
     if (wrongGuesses.length == HANGMAN_UI.length - 1) {
         isGameOver = true;
     }
-
-
-
-
 
 console.log(ANSI.CLEAR_SCREEN);
 console.log(drawWordDisplay());
@@ -140,10 +137,9 @@ if (!wasGuessCorrect) {
 console.log(totalWinsText + totalWins, totalLossText + totalLosses);
 const answer = (await askQuestion(ANSI.COLOR.BLUE + replayText)).toLowerCase();
 
-if (answer == 'yes') {
+if (answer[0].toLowerCase() == answerYes) {
     isGameOver = false;
 } else {
-    answer == 'no';
     console.log(exitText);
     console.log(ANSI.RESET);
     isGameOver = true;
