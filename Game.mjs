@@ -102,7 +102,7 @@ while (isGameOver == false) {
 
         if (!isCorrect && !uniqueErrors.includes(answer)) {
             uniqueErrors.push(answer);
-        } else {
+        } else if(isCorrect && uniqueErrors.includes(answer)) {
             repeatedLetter.push(answer);
         }
         
