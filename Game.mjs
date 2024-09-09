@@ -25,6 +25,7 @@ const replayText = "Do you wish to play again? (Y/N) :";
 const exitText = "Thanks for Playing!";
 const alreadyGuessed = "You've Already Guessed That. Try a Different Letter:" ;
 
+
 let isGameOver = false;
 let totalWins = 0;
 let totalLosses = 0;
@@ -102,9 +103,9 @@ while (isGameOver == false) {
 
         if (!isCorrect && !uniqueErrors.includes(answer)) {
             uniqueErrors.push(answer);
-        } else if(isCorrect && uniqueErrors.includes(answer)) {
+        } if(!isCorrect && uniqueErrors.includes(answer)) {
             repeatedLetter.push(answer);
-        }
+            }
         
         if (guessedWord == correctWord) {
             isGameOver = true;
